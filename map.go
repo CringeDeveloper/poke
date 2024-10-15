@@ -14,11 +14,24 @@ func printLocations(loc *Locations) {
 }
 
 func commandMap(paths *Paths) error {
-	if paths.Next == nil {
-		return fmt.Errorf("no next locations")
+	err := mapController(paths, paths.Next)
+
+	return err
+}
+
+func commandMapB(paths *Paths) error {
+	err := mapController(paths, paths.Previous)
+
+	return err
+}
+
+func mapController(paths *Paths, position *string) error {
+	if position == nil {
+		return fmt.Errorf("no such locations")
 	}
 
-	res, err := http.Get(*paths.Next)
+	res, err := http.Get(*position)
+
 	if err != nil {
 		log.Fatal(err)
 	}
