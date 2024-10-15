@@ -5,13 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"pokedex/internal/pokeapi"
 )
-
-func printLocations(loc *Locations) {
-	for _, result := range loc.Results {
-		fmt.Println(result.Name)
-	}
-}
 
 func commandMap(paths *Paths) error {
 	err := mapController(paths, paths.Next)
@@ -30,6 +25,8 @@ func mapController(paths *Paths, position *string) error {
 		return fmt.Errorf("no such locations")
 	}
 
+	pokeapi.GetLocations(position)
+
 	res, err := http.Get(*position)
 
 	if err != nil {
@@ -38,7 +35,7 @@ func mapController(paths *Paths, position *string) error {
 
 	defer res.Body.Close()
 
-	var loc Locations
+	var loc pokeapi.Locations
 
 	decoder := json.NewDecoder(res.Body)
 	err = decoder.Decode(&loc)
@@ -48,7 +45,7 @@ func mapController(paths *Paths, position *string) error {
 
 	paths.Next = loc.Next
 	paths.Previous = loc.Previous
-	printLocations(&loc)
+	pokeapi.PrintLocations(&loc)
 
 	return nil
 }
