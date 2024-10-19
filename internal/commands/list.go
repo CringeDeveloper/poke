@@ -1,34 +1,34 @@
-package main
+package commands
 
-var commandsMap map[string]cliCommand
+var CommandsMap map[string]cliCommand
 
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Paths) error
+	Callback    func(*Paths) error
 }
 
 func init() {
-	commandsMap = map[string]cliCommand{
+	CommandsMap = map[string]cliCommand{
 		"help": {
 			name:        "help",
 			description: "Display a help message",
-			callback:    commandHelp,
+			Callback:    commandHelp,
 		},
 		"exit": {
 			name:        "exit",
 			description: "Exit the Pokedex",
-			callback:    commandExit,
+			Callback:    commandExit,
 		},
 		"map": {
 			name:        "map",
 			description: "snow next 20 maps",
-			callback:    commandMap,
+			Callback:    commandMap,
 		},
 		"map_b": {
 			name:        "map_b",
 			description: "snow previous 20 maps",
-			callback:    commandMapB,
+			Callback:    commandMapB,
 		},
 	}
 }

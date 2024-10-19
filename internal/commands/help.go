@@ -1,11 +1,13 @@
-package main
+package commands
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func commandHelp(paths *Paths) error {
 	fmt.Println("\nWelcome to the Pokedex!")
 	fmt.Printf("Usage:\n\n")
-	for _, v := range commandsMap {
+	for _, v := range CommandsMap {
 		fmt.Printf("%s: %s\n", v.name, v.description)
 	}
 	fmt.Println()

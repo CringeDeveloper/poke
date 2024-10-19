@@ -1,6 +1,8 @@
-package main
+package commands
 
-import "os"
+import (
+	"os"
+)
 
 func commandExit(paths *Paths) error {
 	os.Exit(0)
