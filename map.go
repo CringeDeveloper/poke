@@ -1,10 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
-	"net/http"
 	"pokedex/internal/pokeapi"
 )
 
@@ -25,20 +23,8 @@ func mapController(paths *Paths, position *string) error {
 		return fmt.Errorf("no such locations")
 	}
 
-	pokeapi.GetLocations(position)
+	loc, err := pokeapi.GetLocations(position)
 
-	res, err := http.Get(*position)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer res.Body.Close()
-
-	var loc pokeapi.Locations
-
-	decoder := json.NewDecoder(res.Body)
-	err = decoder.Decode(&loc)
 	if err != nil {
 		log.Fatal(err)
 	}
