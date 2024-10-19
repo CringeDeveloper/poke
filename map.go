@@ -1,10 +1,15 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"log"
 	"pokedex/internal/pokeapi"
+	"pokedex/internal/pokecache"
 )
+
+var cacheMap = pokecache.NewCache() // TODO: think about it
 
 func commandMap(paths *Paths) error {
 	err := mapController(paths, paths.Next)
@@ -24,10 +29,13 @@ func mapController(paths *Paths, position *string) error {
 	}
 
 	loc, err := pokeapi.GetLocations(position)
-
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	locBytes := new(bytes.Buffer) // TODO: change
+	json.NewEncoder(locBytes).Encode(loc)
+	cacheMap.Add(*position, locBytes.Bytes())
 
 	paths.Next = loc.Next
 	paths.Previous = loc.Previous
