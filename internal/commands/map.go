@@ -9,7 +9,7 @@ import (
 	"pokedex/internal/pokecache"
 )
 
-var cacheMap = pokecache.NewCache() // TODO: think about it
+var cacheMap = pokecache.NewCache()
 
 func commandMap(paths *Paths) error {
 	err := mapController(paths, paths.Next)
