@@ -34,7 +34,6 @@ func mapController(paths *Paths, position *string) error {
 	enc := gob.NewEncoder(&myBuffer)
 
 	if val, ok := cacheMap.Get(*position); ok {
-		fmt.Println("WE ARE HERE!!!!!!")
 		reader := bytes.NewReader(val)
 		dec := gob.NewDecoder(reader)
 		err := dec.Decode(&loc)
