@@ -2,7 +2,7 @@ package commands
 
 import (
 	"bytes"
-	"encoding/json"
+	"encoding/gob"
 	"fmt"
 	"log"
 	"pokedex/internal/pokeapi"
@@ -28,14 +28,27 @@ func mapController(paths *Paths, position *string) error {
 		return fmt.Errorf("no such locations")
 	}
 
-	loc, err := pokeapi.GetLocations(position)
-	if err != nil {
-		log.Fatal(err)
-	}
+	var loc pokeapi.Locations
+	var myBuffer bytes.Buffer
 
-	locBytes := new(bytes.Buffer) // TODO: change
-	json.NewEncoder(locBytes).Encode(loc)
-	cacheMap.Add(*position, locBytes.Bytes())
+	enc := gob.NewEncoder(&myBuffer)
+
+	if val, ok := cacheMap.Get(*position); ok {
+		fmt.Println("WE ARE HERE!!!!!!")
+		reader := bytes.NewReader(val)
+		dec := gob.NewDecoder(reader)
+		err := dec.Decode(&loc)
+
+		if err != nil {
+			log.Fatal("cannot decode")
+		}
+	} else {
+		loc, _ = pokeapi.GetLocations(position)
+
+		_ = enc.Encode(loc)
+
+		cacheMap.Add(*position, myBuffer.Bytes())
+	}
 
 	paths.Next = loc.Next
 	paths.Previous = loc.Previous
