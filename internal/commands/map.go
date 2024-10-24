@@ -29,19 +29,17 @@ func mapController(paths *Paths, url *string) error {
 	}
 
 	var loc pokeapi.Locations
-	var myBuffer bytes.Buffer
-
-	enc := gob.NewEncoder(&myBuffer)
 
 	if val, ok := cacheMap.Get(*url); ok {
-		reader := bytes.NewReader(val)
-		dec := gob.NewDecoder(reader)
+		dec := gob.NewDecoder(bytes.NewReader(val))
 		err := dec.Decode(&loc)
 
 		if err != nil {
 			log.Fatal("cannot decode")
 		}
 	} else {
+		var myBuffer bytes.Buffer
+		enc := gob.NewEncoder(&myBuffer)
 		loc, _ = pokeapi.GetLocations(url)
 
 		_ = enc.Encode(loc)
