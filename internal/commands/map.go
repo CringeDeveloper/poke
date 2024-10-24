@@ -23,8 +23,8 @@ func commandMapB(paths *Paths) error {
 	return err
 }
 
-func mapController(paths *Paths, position *string) error {
-	if position == nil {
+func mapController(paths *Paths, url *string) error {
+	if url == nil {
 		return fmt.Errorf("no such locations")
 	}
 
@@ -33,7 +33,7 @@ func mapController(paths *Paths, position *string) error {
 
 	enc := gob.NewEncoder(&myBuffer)
 
-	if val, ok := cacheMap.Get(*position); ok {
+	if val, ok := cacheMap.Get(*url); ok {
 		reader := bytes.NewReader(val)
 		dec := gob.NewDecoder(reader)
 		err := dec.Decode(&loc)
@@ -42,11 +42,11 @@ func mapController(paths *Paths, position *string) error {
 			log.Fatal("cannot decode")
 		}
 	} else {
-		loc, _ = pokeapi.GetLocations(position)
+		loc, _ = pokeapi.GetLocations(url)
 
 		_ = enc.Encode(loc)
 
-		cacheMap.Add(*position, myBuffer.Bytes())
+		cacheMap.Add(*url, myBuffer.Bytes())
 	}
 
 	paths.Next = loc.Next
