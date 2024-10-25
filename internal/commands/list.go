@@ -30,5 +30,10 @@ func init() {
 			description: "snow previous 20 maps",
 			Callback:    commandMapB,
 		},
+		"explore": {
+			name:        "explore",
+			description: "explore the <area_name>",
+			Callback:    commandExplore,
+		},
 	}
 }
