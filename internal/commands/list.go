@@ -5,7 +5,7 @@ var CommandsMap map[string]cliCommand
 type cliCommand struct {
 	name        string
 	description string
-	Callback    func(*Paths) error
+	Callback    func(*Paths, string) error
 }
 
 func init() {

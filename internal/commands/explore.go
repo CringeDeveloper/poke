@@ -8,8 +8,8 @@ import (
 	"pokedex/internal/pokeapi"
 )
 
-func commandExplore(paths *Paths) error {
-	res, err := http.Get(pokeapi.BaseUrl + "/location-area/canalave-city-area")
+func commandExplore(paths *Paths, arg string) error {
+	res, err := http.Get(pokeapi.BaseUrl + "/location-area/" + arg)
 
 	if err != nil {
 		log.Fatal("error")
@@ -23,7 +23,7 @@ func commandExplore(paths *Paths) error {
 		log.Fatal("error decode")
 	}
 
-	fmt.Println("Exploring {location_name}...")
+	fmt.Printf("Exploring %s...\n", arg)
 	fmt.Println("Found Pokemon:")
 	locationArea.PrintPokemon()
 

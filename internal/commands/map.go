@@ -10,13 +10,13 @@ import (
 
 var cacheMap = pokecache.NewCache()
 
-func commandMap(paths *Paths) error {
+func commandMap(paths *Paths, arg string) error {
 	err := mapController(paths, paths.Next)
 
 	return err
 }
 
-func commandMapB(paths *Paths) error {
+func commandMapB(paths *Paths, arg string) error {
 	err := mapController(paths, paths.Previous)
 
 	return err

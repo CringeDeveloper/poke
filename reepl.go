@@ -9,12 +9,13 @@ import (
 func startReepl() {
 	paths := commands.NewPaths()
 
-	var userInput string
+	var command string
+	var arg string
 	for {
 		fmt.Print("Pokedex > ")
-		fmt.Scan(&userInput)
-		if val, ok := commands.CommandsMap[userInput]; ok {
-			err := val.Callback(paths)
+		fmt.Scan(&command, &arg)
+		if val, ok := commands.CommandsMap[command]; ok {
+			err := val.Callback(paths, arg)
 			if err != nil {
 				log.Fatal(err)
 			}

@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func commandHelp(paths *Paths) error {
+func commandHelp(paths *Paths, arg string) error {
 	fmt.Println("\nWelcome to the Pokedex!")
 	fmt.Printf("Usage:\n\n")
 	for _, v := range CommandsMap {
