@@ -6,6 +6,5 @@ type Paths struct {
 }
 
 func NewPaths() *Paths {
-	base := "https://pokeapi.co/api/v2/location-area/"
-	return &Paths{Next: &base, Previous: nil}
+	return &Paths{Next: nil, Previous: nil}
 }

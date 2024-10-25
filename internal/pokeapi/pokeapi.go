@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func GetLocations(url *string) (Locations, error) {
-	res, err := http.Get(*url)
+func GetLocations(url string) (Locations, error) {
+	res, err := http.Get(url)
 
 	if err != nil {
 		return Locations{}, err

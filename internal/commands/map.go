@@ -3,7 +3,6 @@ package commands
 import (
 	"bytes"
 	"encoding/gob"
-	"fmt"
 	"log"
 	"pokedex/internal/pokeapi"
 	"pokedex/internal/pokecache"
@@ -23,14 +22,16 @@ func commandMapB(paths *Paths) error {
 	return err
 }
 
-func mapController(paths *Paths, url *string) error {
-	if url == nil {
-		return fmt.Errorf("no such locations")
+func mapController(paths *Paths, pageURL *string) error {
+	url := pokeapi.BaseUrl + "/location-area"
+
+	if pageURL != nil {
+		url = *pageURL
 	}
 
 	var loc pokeapi.Locations
 
-	if val, ok := cacheMap.Get(*url); ok {
+	if val, ok := cacheMap.Get(url); ok {
 		dec := gob.NewDecoder(bytes.NewReader(val))
 		err := dec.Decode(&loc)
 
@@ -44,7 +45,7 @@ func mapController(paths *Paths, url *string) error {
 
 		_ = enc.Encode(loc)
 
-		cacheMap.Add(*url, myBuffer.Bytes())
+		cacheMap.Add(url, myBuffer.Bytes())
 	}
 
 	paths.Next = loc.Next
