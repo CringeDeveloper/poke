@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
+	"os"
 	"pokedex/internal/pokeapi"
 	"strings"
 )
@@ -14,11 +16,13 @@ type config struct {
 }
 
 func startReepl(cfg *config) {
-	var command string
 	var arg string
 	for {
 		fmt.Print("Pokedex > ")
-		fmt.Scan(&command)
+
+		in := bufio.NewReader(os.Stdin)
+		command, _ := in.ReadString('\n')
+		command = strings.TrimSpace(command)
 		parsed := strings.Split(command, " ")
 		if len(parsed) == 1 {
 			command = parsed[0]
