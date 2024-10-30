@@ -12,8 +12,8 @@ type Locations struct {
 	} `json:"results"`
 }
 
-func PrintLocations(loc *Locations) {
-	for _, result := range loc.Results {
+func (l *Locations) PrintLocations() {
+	for _, result := range l.Results {
 		fmt.Println(result.Name)
 	}
 }
