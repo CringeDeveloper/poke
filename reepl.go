@@ -3,19 +3,23 @@ package main
 import (
 	"fmt"
 	"log"
-	"pokedex/internal/commands"
+	"pokedex/internal/pokeapi"
 )
 
-func startReepl() {
-	paths := commands.NewPaths()
+type config struct {
+	pokeapiClient pokeapi.Client
+	nextLocation  *string
+	prevLocation  *string
+}
 
+func startReepl(cfg *config) {
 	var command string
 	var arg string
 	for {
 		fmt.Print("Pokedex > ")
 		fmt.Scan(&command, &arg)
-		if val, ok := commands.CommandsMap[command]; ok {
-			err := val.Callback(paths, arg)
+		if val, ok := CommandsMap[command]; ok {
+			err := val.Callback(cfg, arg)
 			if err != nil {
 				log.Fatal(err)
 			}

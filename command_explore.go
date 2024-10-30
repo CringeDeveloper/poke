@@ -1,4 +1,4 @@
-package commands
+package main
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 	"pokedex/internal/pokeapi"
 )
 
-func commandExplore(paths *Paths, arg string) error {
+func commandExplore(cfg *config, arg string) error {
 	res, err := http.Get(pokeapi.BaseUrl + "/location-area/" + arg)
 
 	if err != nil {

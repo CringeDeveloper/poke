@@ -1,11 +1,11 @@
-package commands
+package main
 
 var CommandsMap map[string]cliCommand
 
 type cliCommand struct {
 	name        string
 	description string
-	Callback    func(*Paths, string) error
+	Callback    func(*config, string) error
 }
 
 func init() {
